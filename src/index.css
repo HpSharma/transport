@@ -1,4 +1,17 @@
+:root {
+  --bg-color: #fff;
+  --text-color: #222;
+}
+
+.dark {
+  --bg-color: #222;
+  --text-color: #FAFAFA;
+}
+
 body {
   margin: 0;
   padding: 0;
+
+  background-color: var(--bg-color);
+  color: var(--text-color);
 }
