@@ -1,8 +1,11 @@
 import { styled } from '@mui/material/styles';
-import { useTheme } from '../../hooks/useTheme.jsx';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import { IconButton } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import MenuOpenIcon from '@mui/icons-material/MenuOpen';
+
+import { useTheme } from '../../hooks/useTheme.jsx';
 
 const HeaderContainer = styled('header')({
   display: 'flex',
@@ -37,11 +40,15 @@ const RightContainer = styled('header')({
   gap: 10,
 });
 
-const Header = () => {
+const Header = ({ toggleOpenSideBar }) => {
   const { theme, toggleTheme } = useTheme();
+
   return (
     <HeaderContainer>
       <LeftContainer>
+        <IconButton onClick={toggleOpenSideBar}>
+          <MenuIcon />
+        </IconButton>
         <a href={'/'}>Sanjay Transport</a>
       </LeftContainer>
       <RightContainer>
