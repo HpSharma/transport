@@ -6,7 +6,6 @@ import { MainContainer, Tiles, TilesContainer } from './StyledComponent.jsx';
 import DashboardApiService from '@services/DashboardApiService.js';
 
 const Dashboard = () => {
-  const [openSideBar, setOpenSideBar] = useState(false);
   const [tilesData, setTilesData] = useState({});
 
   useEffect(() => {
@@ -16,16 +15,8 @@ const Dashboard = () => {
     };
     fetchTitlesDetails();
   }, []);
-
-  const toggleOpenSideBar = () => {
-    setOpenSideBar((prevState) => !prevState);
-  };
-
   return (
     <>
-      <Header toggleOpenSideBar={toggleOpenSideBar} />
-      <SideBar open={openSideBar} toggleOpen={toggleOpenSideBar} />
-
       <MainContainer>
         <TilesContainer container spacing={4} columns={12}>
           <Tiles size={{ xs: 12, sm: 6, md: 3 }}>

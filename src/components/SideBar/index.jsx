@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
+
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
@@ -23,6 +25,7 @@ const PAGES = [
   {
     name: 'Pump',
     icon: <SanitizerIcon />,
+    link: '/pump',
   },
 ];
 
@@ -37,12 +40,14 @@ export default function SideBar({ open, toggleOpen }) {
         </ListItem>
         <Divider />
         {PAGES.map((item, index) => (
-          <ListItem key={item.name + '_' + index} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.name} />
-            </ListItemButton>
-          </ListItem>
+          <Link key={item.name + '_' + index} to={item.link}>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText>{item.name}</ListItemText>
+              </ListItemButton>
+            </ListItem>
+          </Link>
         ))}
       </List>
     </Box>
