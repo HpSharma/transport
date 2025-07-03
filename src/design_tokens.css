@@ -1,0 +1,31 @@
+
+:root {
+    --accent-light-default: #acf9e9;
+    --accent-light-hover: #cffbf2;
+    --accent-light-selected: #defdf8;
+    --accent-strong-default: #197367;
+    --accent-strong-hover: #3c8175;
+    --accent-strong-selected: #3c8175;
+    --background-error-strong: #c61a10;
+    --background-error-strong-hover: #da3125;
+    --background-disabled: #dde3d3;
+    --background-light: #f8f8f8;
+  
+    --border-error-light: #fbcccc;
+    --border-error-strong: #c61a10;
+    --border-focused: #333d3e;
+    --border-light: #dde3d3;
+    --border-strong: #809294;
+  
+    --icon-default: #333d3e;
+    --icon-light: #5e6c6e;
+    --icon-success: #20844b;
+  
+    --text-default: #333d3e;
+    --text-ondark: #ffffff;
+    --text-disabled: #809294;
+    --text-error: #c61a10;
+    --text-placeholder: #97a6a8;
+    --text-success: #20844b
+  }
+  

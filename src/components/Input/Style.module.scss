@@ -1,0 +1,80 @@
+
+.borderRed {
+  border: 1px solid darkred !important;
+}
+
+.colorRed {
+  color: darkred !important;
+}
+
+.pr25 {
+  padding-right: 25px !important;
+}
+
+.inputContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+
+  label {
+    span {
+      color: darkred;
+    }
+  }
+
+  svg {
+    position: absolute;
+    right: 8px;
+    top: 30px;
+    color: #757575;
+  }
+}
+
+.textInput {
+  height: 32px;
+  padding: 0px 8px;
+  outline: none;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #242424;
+  width: 150px;
+}
+
+.helpText {
+  font-size: 12px;
+}
+
+.textArea{
+  // width: 910px;
+  // height: 112px;
+  padding: 0px 8px;
+  outline: none;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #242424;
+}
+
+.buttonContainer{
+  display: flex;
+  justify-content: flex-start;
+  gap: 4px;
+  margin-top: 8px;
+  
+
+  button {
+    padding: 0 10px;
+    width: 85px;
+    height: 34px;
+    font-size: 14px;
+    border-radius: 22px;
+    border: none;
+    background-color: #404445;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #CFFBF2;
+    }
+  }
+}

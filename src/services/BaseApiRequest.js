@@ -1,8 +1,9 @@
+
 import axiosInstance from '@interceptors/axiosInterceptor.js';
 import { AxiosError } from 'axios';
 
 class BaseApiRequest {
-  handleSuccess(response) {
+  static handleSuccess(response) {
     return {
       status: response.status,
       data: response,
@@ -10,7 +11,7 @@ class BaseApiRequest {
     };
   }
 
-  handleError(error) {
+  static handleError(error) {
     if (error instanceof AxiosError) {
       return {
         status: error.code,
@@ -53,5 +54,6 @@ class BaseApiRequest {
     }
   }
 }
+
 
 export default BaseApiRequest;

@@ -1,9 +1,16 @@
 import { styled } from '@mui/material/styles';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
-import { IconButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
+import { TextInput } from '../../../src/components/Input';
+import { IconButtons } from '../common/Button';
+import { IconButton } from '@mui/material';
+import styles from '../SideBar/styled.module.scss';
+
+
+
+
 
 import { useTheme } from '../../hooks/useTheme.jsx';
 
@@ -49,15 +56,24 @@ const Header = ({ toggleOpenSideBar }) => {
         <IconButton onClick={toggleOpenSideBar}>
           <MenuIcon />
         </IconButton>
-        <a href={'/'}>Sanjay Transport</a>
+
+        <div style={{ display: 'contents', justifyContent: 'center', marginBottom: '20px' }}>
+         <a href={'/'}> <img
+            src="../../../public/buts-logo2.png"
+            alt="Logo"
+            style={{ width: '200px', height: '97px', objectFit: 'contain' }}
+            />
+            </a>
+        </div>
+
       </LeftContainer>
       <RightContainer>
-        <div>SB</div>
         <div>
-          <input
-            type={'text'}
-            placeholder={'What are you looking for today?'}
-          />
+          <IconButtons></IconButtons>
+
+        </div>
+        <div>
+          <TextInput></TextInput>
         </div>
         <IconButton onClick={toggleTheme}>
           {theme === 'dark' ? <LightModeIcon /> : <DarkModeIcon />}
