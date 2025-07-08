@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import {
   MainContainer,
   Tiles,
@@ -41,8 +42,10 @@ const Dashboard = () => {
       <MainContainer>
         <TilesContainer container spacing={4} columns={12}>
           <Tiles size={{ xs: 12, sm: 6, md: 3 }}>
+            <Link to="/pump">
             <h3>Total Vehicles</h3>
             <b>{tilesData.total_vehicles}</b>
+            </Link>
           </Tiles>
           <Tiles size={{ xs: 12, sm: 6, md: 3 }}>
             <h3>
