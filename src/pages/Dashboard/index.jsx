@@ -1,36 +1,22 @@
 import { useEffect, useState } from 'react';
 import {
   MainContainer,
+  tableCellStyle,
+  tableHeaderStyle,
   Tiles,
   TilesContainer,
-  tableHeaderStyle,
-  tableCellStyle,
 } from './StyledComponent.jsx';
 import DashboardApiService from '@services/DashboardApiService.js';
 import Spinner from '@components/Spinner/Index.jsx';
+import { useFetch } from '@hooks/useFetch.js';
 
 const Dashboard = () => {
-  const [loading, setLoading] = useState(false);
-  const [tilesData, setTilesData] = useState({});
-  const [vehicleData, setVehicleData] = useState([]);
+  const { loading, error, data } = useFetch({
+    fetchFunction: DashboardApiService.fetchDashboardData,
+  });
 
-  useEffect(() => {
-    const fetchTitlesDetails = async () => {
-      setLoading(true);
-      try {
-        const result = await DashboardApiService.fetchDashboardTilesDetails();
-        setTilesData(result.data?.data);
-        const res = await DashboardApiService.fetchVehicleDetails();
-        setVehicleData(res.data?.data.data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTitlesDetails();
-  }, []);
+  const { tilesData, vehicleData } = data || {};
+  console.log({ error });
 
   if (loading) {
     return <Spinner />;
@@ -42,7 +28,7 @@ const Dashboard = () => {
         <TilesContainer container spacing={4} columns={12}>
           <Tiles size={{ xs: 12, sm: 6, md: 3 }}>
             <h3>Total Vehicles</h3>
-            <b>{tilesData.total_vehicles}</b>
+            <b>{tilesData?.total_vehicles}</b>
           </Tiles>
           <Tiles size={{ xs: 12, sm: 6, md: 3 }}>
             <h3>
@@ -52,11 +38,11 @@ const Dashboard = () => {
           </Tiles>
           <Tiles size={{ xs: 12, sm: 6, md: 3 }}>
             <h3>Total Transporter</h3>
-            <b>{tilesData.total_transporters}</b>
+            <b>{tilesData?.total_transporters}</b>
           </Tiles>
           <Tiles size={{ xs: 12, sm: 6, md: 3 }}>
             <h3>Number of Companies</h3>
-            <b>{tilesData.total_companies}</b>
+            <b>{tilesData?.total_companies}</b>
           </Tiles>
         </TilesContainer>
 
@@ -77,8 +63,8 @@ const Dashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {vehicleData.length > 0 ? (
-                vehicleData.map((vehicle, index) => (
+              {vehicleData?.length > 0 ? (
+                vehicleData?.map((vehicle, index) => (
                   <tr key={index}>
                     <td style={tableCellStyle}>{index + 1}</td>
                     <td style={tableCellStyle}>{vehicle.vehicle_number}</td>
