@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   MainContainer,
@@ -9,15 +9,20 @@ import {
 } from './StyledComponent.jsx';
 import DashboardApiService from '@services/DashboardApiService.js';
 import Spinner from '@components/Spinner/Index.jsx';
+import Sanckbar from '@components/Snackbar/index.jsx'
+import styles from '@pages/Pump/styled.module.scss';
 
 const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const [tilesData, setTilesData] = useState({});
   const [vehicleData, setVehicleData] = useState([]);
 
+  const [snackOpen, setSnackOpen] = useState(false);
+
   useEffect(() => {
     const fetchTitlesDetails = async () => {
       setLoading(true);
+
       try {
         const result = await DashboardApiService.fetchDashboardTilesDetails();
         setTilesData(result.data?.data);
@@ -26,7 +31,8 @@ const Dashboard = () => {
       } catch (error) {
         console.log(error);
       } finally {
-        setTimeout(() => setLoading(false), 2000);
+        setLoading(false);
+        // setTimeout(() => setLoading(false), 2000);
       }
     };
 
@@ -36,6 +42,14 @@ const Dashboard = () => {
   if (loading) {
     return <Spinner />;
   }
+
+  const handleOpen = () => {
+    setSnackOpen(true);
+  };
+
+  const handleClose = () => {
+    setSnackOpen(false);
+  };
 
   return (
     <>
@@ -104,6 +118,19 @@ const Dashboard = () => {
           </table>
         </div>
       </MainContainer>
+
+
+      <button variant="contained" onClick={handleOpen}>Show Sanckbar</button>
+
+
+      <Sanckbar
+        open={snackOpen}
+        onClose={handleClose}
+        message="Action completed successfully!"
+        severity="success" // 'error' | 'info' | 'warning' | 'success'
+        duration={4000}
+      />
+
     </>
   );
 };
