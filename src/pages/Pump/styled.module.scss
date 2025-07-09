@@ -1,93 +1,115 @@
 .pumpContainer {
-  padding: 2rem;
-  background-color: #f8fafc;
-  min-height: 100vh;
+  padding: 20px;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
-
-  h1 {
-    font-size: 1.8rem;
-    color: #1e3a8a;
-  }
 }
 
-.addBtn {
-  background-color: #2563eb;
+.addBtn, .saveBtn {
+  background-color: #007bff;
   color: white;
-  padding: 0.6rem 1.2rem;
   border: none;
-  border-radius: 8px;
-  font-weight: 600;
+  padding: 8px 12px;
+  margin: 5px 0;
   cursor: pointer;
-  transition: 0.3s ease;
-
-  &:hover {
-    background-color: #1d4ed8;
-  }
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
 }
 
+.addBtn:hover,
+.saveBtn:hover {
+  background-color: #0056b3;
+}
+
+.cancelBtn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.cancelBtn:hover {
+  background-color: #b02a37;
+}
+
+/* Improved form layout */
+.formWrapper {
+  background-color: #f9f9f9;
+  padding: 20px;
+  margin: 20px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  max-width: 500px;
+}
+
+.pumpForm {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.formRow {
+  display: flex;
+  flex-direction: column;
+}
+
+.formRow label {
+  margin-bottom: 5px;
+  font-weight: 600;
+}
+
+.formRow input,
+.formRow select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Form button group */
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+/* Table */
 .pumpTable {
   width: 100%;
   border-collapse: collapse;
-  background-color: white;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
-
-  th, td {
-    padding: 0.8rem 1rem;
-    text-align: left;
-    border-bottom: 1px solid #e2e8f0;
-  }
-
-  th {
-    background-color: #e5e7eb;
-    color: #374151;
-    font-weight: 600;
-  }
-
-  td {
-    color: #4b5563;
-  }
-
-  button {
-    margin-right: 8px;
-    padding: 4px 10px;
-    border: none;
-    border-radius: 4px;
-    font-size: 0.85rem;
-    cursor: pointer;
-  }
+  margin-top: 20px;
 }
 
-.editBtn {
-  background-color: #3b82f6;
-  color: white;
-
-  &:hover {
-    background-color: #2563eb;
-  }
+.pumpTable th,
+.pumpTable td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
 }
 
-.statusBtn {
-  background-color: #10b981;
-  color: white;
-
-  &:hover {
-    background-color: #059669;
-  }
-}
-
+/* Action buttons */
+.editBtn,
+.statusBtn,
 .deleteBtn {
-  background-color: #ef4444;
-  color: white;
+  margin-right: 5px;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
 
-  &:hover {
-    background-color: #dc2626;
-  }
+.editBtn { background-color: orange; color: white; }
+.statusBtn { background-color: #17a2b8; color: white; }
+.deleteBtn { background-color: red; color: white; }
+
+.editBtn:hover,
+.statusBtn:hover,
+.deleteBtn:hover {
+  opacity: 0.85;
 }
