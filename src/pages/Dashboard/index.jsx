@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   MainContainer,
@@ -11,33 +10,14 @@ import DashboardApiService from '@services/DashboardApiService.js';
 import Spinner from '@components/Spinner/Index.jsx';
 import Sanckbar from '@components/Snackbar/index.jsx'
 import styles from '@pages/Pump/styled.module.scss';
+import { useFetch } from '@hooks/useFetch.js';
 
 const Dashboard = () => {
-  const [loading, setLoading] = useState(false);
-  const [tilesData, setTilesData] = useState({});
-  const [vehicleData, setVehicleData] = useState([]);
-
-  const [snackOpen, setSnackOpen] = useState(false);
-
-  useEffect(() => {
-    const fetchTitlesDetails = async () => {
-      setLoading(true);
-
-      try {
-        const result = await DashboardApiService.fetchDashboardTilesDetails();
-        setTilesData(result.data?.data);
-        const res = await DashboardApiService.fetchVehicleDetails();
-        setVehicleData(res.data?.data.data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-        // setTimeout(() => setLoading(false), 2000);
-      }
-    };
-
-    fetchTitlesDetails();
-  }, []);
+  const { loading, error, data } = useFetch({
+    fetchFunction: DashboardApiService.fetchDashboardData,
+  });
+  const { tilesData, vehicleData } = data || {};
+  console.log({ error });
 
   if (loading) {
     return <Spinner />;
@@ -69,11 +49,11 @@ const Dashboard = () => {
           </Tiles>
           <Tiles size={{ xs: 12, sm: 6, md: 3 }}>
             <h3>Total Transporter</h3>
-            <b>{tilesData.total_transporters}</b>
+            <b>{tilesData?.total_transporters}</b>
           </Tiles>
           <Tiles size={{ xs: 12, sm: 6, md: 3 }}>
             <h3>Number of Companies</h3>
-            <b>{tilesData.total_companies}</b>
+            <b>{tilesData?.total_companies}</b>
           </Tiles>
         </TilesContainer>
 
@@ -94,8 +74,8 @@ const Dashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {vehicleData.length > 0 ? (
-                vehicleData.map((vehicle, index) => (
+              {vehicleData?.length > 0 ? (
+                vehicleData?.map((vehicle, index) => (
                   <tr key={index}>
                     <td style={tableCellStyle}>{index + 1}</td>
                     <td style={tableCellStyle}>{vehicle.vehicle_number}</td>
@@ -119,12 +99,8 @@ const Dashboard = () => {
         </div>
       </MainContainer>
 
-
-      <button variant="contained" onClick={handleOpen}>Show Sanckbar</button>
-
-
       <Sanckbar
-        open={snackOpen}
+        open={Boolean(error)}
         onClose={handleClose}
         message="Action completed successfully!"
         severity="success" // 'error' | 'info' | 'warning' | 'success'
@@ -134,4 +110,5 @@ const Dashboard = () => {
     </>
   );
 };
+
 export default Dashboard;
