@@ -8,8 +8,7 @@ import {
 } from './StyledComponent.jsx';
 import DashboardApiService from '@services/DashboardApiService.js';
 import Spinner from '@components/Spinner/Index.jsx';
-import Sanckbar from '@components/Snackbar/index.jsx'
-import styles from '@pages/Pump/styled.module.scss';
+import Sanckbar from '@components/Snackbar/index.jsx';
 import { useFetch } from '@hooks/useFetch.js';
 
 const Dashboard = () => {
@@ -23,22 +22,14 @@ const Dashboard = () => {
     return <Spinner />;
   }
 
-  const handleOpen = () => {
-    setSnackOpen(true);
-  };
-
-  const handleClose = () => {
-    setSnackOpen(false);
-  };
-
   return (
     <>
       <MainContainer>
         <TilesContainer container spacing={4} columns={12}>
           <Tiles size={{ xs: 12, sm: 6, md: 3 }}>
             <Link to="/pump">
-            <h3>Total Vehicles</h3>
-            <b>{tilesData.total_vehicles}</b>
+              <h3>Total Vehicles</h3>
+              <b>{tilesData?.total_vehicles}</b>
             </Link>
           </Tiles>
           <Tiles size={{ xs: 12, sm: 6, md: 3 }}>
@@ -101,12 +92,9 @@ const Dashboard = () => {
 
       <Sanckbar
         open={Boolean(error)}
-        onClose={handleClose}
-        message="Action completed successfully!"
-        severity="success" // 'error' | 'info' | 'warning' | 'success'
-        duration={4000}
+        message={error.message}
+        severity="error"
       />
-
     </>
   );
 };
