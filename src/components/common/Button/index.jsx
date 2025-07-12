@@ -1,5 +1,3 @@
-
-
 export const IconButtons = () => {
   const buttonStyle = {
     width: '40px',
@@ -14,13 +12,9 @@ export const IconButtons = () => {
     transition: 'background-color 0.3s ease',
   };
 
-  return (
-    <button style={buttonStyle}>SB</button>
-
-  );
+  return <button style={buttonStyle}>SB</button>;
 };
 
 export const BadgeButton = () => {
   return <button>Badge Button</button>;
 };
-
