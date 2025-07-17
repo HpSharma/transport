@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import {
   MainContainer,
-  Tiles,
   TilesContainer,
   tableHeaderStyle,
   tableCellStyle,
@@ -10,13 +9,15 @@ import DashboardApiService from '@services/DashboardApiService.js';
 import Spinner from '@components/Spinner/Index.jsx';
 import Sanckbar from '@components/Snackbar/index.jsx';
 import { useFetch } from '@hooks/useFetch.js';
+import Tiles from '@components/common/Tiles/index.jsx';
+import { Grid } from '@mui/material';
 
 const Dashboard = () => {
   const { loading, error, data } = useFetch({
     fetchFunction: DashboardApiService.fetchDashboardData,
   });
-  const { tilesData, vehicleData } = data || {};
-  console.log({ error });
+  const [tilesData, vehicleData] = data || [[], []];
+  console.log({ tilesData }, { vehicleData });
 
   if (loading) {
     return <Spinner />;
@@ -26,26 +27,16 @@ const Dashboard = () => {
     <>
       <MainContainer>
         <TilesContainer container spacing={4} columns={12}>
-          <Tiles size={{ xs: 12, sm: 6, md: 3 }}>
-            <Link to="/pump">
-              <h3>Total Vehicles</h3>
-              <b>{tilesData?.total_vehicles}</b>
-            </Link>
-          </Tiles>
-          <Tiles size={{ xs: 12, sm: 6, md: 3 }}>
-            <h3>
-              Total Income <span>(today)</span>
-            </h3>
-            <b>150000</b>
-          </Tiles>
-          <Tiles size={{ xs: 12, sm: 6, md: 3 }}>
-            <h3>Total Transporter</h3>
-            <b>{tilesData?.total_transporters}</b>
-          </Tiles>
-          <Tiles size={{ xs: 12, sm: 6, md: 3 }}>
-            <h3>Number of Companies</h3>
-            <b>{tilesData?.total_companies}</b>
-          </Tiles>
+          {tilesData?.map((tile, idx) => {
+            return (
+              <Grid key={`${tile.name}-${idx}`} size={{ xs: 12, sm: 6, md: 3 }}>
+                <Tiles>
+                  <Tiles.Header>{tile.name}</Tiles.Header>
+                  <Tiles.Content>{tile.value}</Tiles.Content>
+                </Tiles>
+              </Grid>
+            );
+          })}
         </TilesContainer>
 
         {/* Table Section */}
@@ -92,7 +83,7 @@ const Dashboard = () => {
 
       <Sanckbar
         open={Boolean(error)}
-        message={error.message}
+        message={error?.message}
         severity="error"
       />
     </>
