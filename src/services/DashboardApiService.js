@@ -1,5 +1,4 @@
 import BaseApiRequest from '@services/BaseApiRequest.js';
-import Tiles from '@components/common/Tiles/index.jsx';
 
 class DashboardApiService extends BaseApiRequest {
   constructor() {
