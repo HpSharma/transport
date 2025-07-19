@@ -1,4 +1,5 @@
 import BaseApiRequest from '@services/BaseApiRequest.js';
+import Tiles from '@components/common/Tiles/index.jsx';
 
 class DashboardApiService extends BaseApiRequest {
   constructor() {
@@ -11,6 +12,11 @@ class DashboardApiService extends BaseApiRequest {
       DashboardApiService.fetchVehicleDetails(),
     ]);
   };
+
+
+
+
+
   // for fetching tiles data
   static fetchDashboardTilesDetails = async () => {
     return await BaseApiRequest.get(

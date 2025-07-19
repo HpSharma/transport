@@ -16,7 +16,7 @@ const Dashboard = () => {
     fetchFunction: DashboardApiService.fetchDashboardData,
   });
   const { tilesData, vehicleData } = data || {};
-  console.log({ error });
+  console.log({ tilesData });
 
   if (loading) {
     return <Spinner />;
@@ -92,7 +92,7 @@ const Dashboard = () => {
 
       <Sanckbar
         open={Boolean(error)}
-        message={error.message}
+        message={error?.message}
         severity="error"
       />
     </>
