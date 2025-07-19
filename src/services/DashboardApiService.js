@@ -13,10 +13,6 @@ class DashboardApiService extends BaseApiRequest {
     ]);
   };
 
-
-
-
-
   // for fetching tiles data
   static fetchDashboardTilesDetails = async () => {
     return await BaseApiRequest.get(
