@@ -1,37 +1,34 @@
 import React, { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+
 import styles from './styled.module.scss';
 
+const initialPumpStates = {
+  name: '',
+  type: '',
+  status: '',
+  location: '',
+};
+
 const Pump = () => {
-  const [pumpData, setPumpData] = useState([ ]);
+  const [pumpData, setPumpData] = useState([]);
 
   const [showForm, setShowForm] = useState(false);
-  const [newPump, setNewPump] = useState({
-    name: '',
-    type: '',
-    status: '',
-    location: '',
-  });
 
-  const handleInputChange = (e) => {
-    setNewPump({
-      ...newPump,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleAddPump = () => {
-    setPumpData([
-      ...pumpData,
-      { ...newPump, id: pumpData.length + 1 },
-    ]);
-    setNewPump({
-      name: '',
-      type: '',
-      status: '',
-      location: '',
-    });
+  const handleAddPump = (data) => {
+    setPumpData([...pumpData, { ...data, id: pumpData.length + 1 }]);
     setShowForm(false);
   };
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isSubmitting, isValid },
+  } = useForm({
+    defaultValues: initialPumpStates,
+    mode: 'onChange',
+    reValidateMode: 'onChange',
+  });
 
   return (
     <div className={styles.pumpContainer}>
@@ -48,56 +45,74 @@ const Pump = () => {
       {showForm && (
         <div className={styles.formWrapper}>
           <h2>Add New Pump</h2>
-          <form className={styles.pumpForm} onSubmit={(e) => {
-            e.preventDefault();
-            handleAddPump();
-          }}>
+          <form
+            className={styles.pumpForm}
+            onSubmit={handleSubmit(handleAddPump)}
+          >
             <div className={styles.formRow}>
               <label>Pump Name</label>
-              <input
-                type="text"
-                name="name"
-                value={newPump.name}
-                onChange={handleInputChange}
-                required
+              <Controller
+                name={'name'}
+                control={control}
+                rules={{ required: 'Enter name' }}
+                render={({ field: { onChange, value } }) => (
+                  <input type="text" value={value} onChange={onChange} />
+                )}
               />
+              {errors.name && <span>{errors.name.message}</span>}
             </div>
             <div className={styles.formRow}>
               <label>Type</label>
-              <input
-                type="text"
-                name="type"
-                value={newPump.type}
-                onChange={handleInputChange}
-                required
+              <Controller
+                name={'type'}
+                control={control}
+                rules={{ required: 'Enter type' }}
+                render={({ field: { onChange, value } }) => (
+                  <input type="text" value={value} onChange={onChange} />
+                )}
               />
             </div>
             <div className={styles.formRow}>
               <label>Status</label>
-              <select
-                name="status"
-                value={newPump.status}
-                onChange={handleInputChange}
-                required
-              >
-                <option value="">-- Select Status --</option>
-                <option value="Active">Active</option>
-                <option value="Inactive">Inactive</option>
-              </select>
+              <Controller
+                name={'status'}
+                control={control}
+                rules={{ required: 'Enter status' }}
+                render={({ field: { onChange, value } }) => (
+                  <select name="status" value={value} onChange={onChange}>
+                    <option value="">-- Select Status --</option>
+                    <option value="Active">Active</option>
+                    <option value="Inactive">Inactive</option>
+                  </select>
+                )}
+              />
             </div>
             <div className={styles.formRow}>
               <label>Location</label>
-              <input
-                type="text"
-                name="location"
-                value={newPump.location}
-                onChange={handleInputChange}
-                required
+              <Controller
+                name={'location'}
+                control={control}
+                rules={{ required: 'Enter location' }}
+                render={({ field: { onChange, value } }) => (
+                  <input type="text" value={value} onChange={onChange} />
+                )}
               />
             </div>
             <div className={styles.formActions}>
-              <button type="submit" className={styles.saveBtn}>Save</button>
-              <button type="button" className={styles.cancelBtn} onClick={() => setShowForm(false)}>Cancel</button>
+              <button
+                type="submit"
+                className={styles.saveBtn}
+                disabled={!isValid || isSubmitting}
+              >
+                Save
+              </button>
+              <button
+                type="button"
+                className={styles.cancelBtn}
+                onClick={() => setShowForm(false)}
+              >
+                Cancel
+              </button>
             </div>
           </form>
         </div>
