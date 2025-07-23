@@ -15,12 +15,14 @@ const Dashboard = () => {
   const { loading, error, data } = useFetch({
     fetchFunction: DashboardApiService.fetchDashboardData,
   });
-  const vehicleData = data?.[1]?.data?.data?.data || [];
-  const tilesRaw = data?.[0]?.data?.data || {};
-  const tilesData = Object.entries(tilesRaw)
-    .filter(([key]) => key !== 'success')
-    .map(([name, value]) => ({ name, value }));
 
+  const tilesRaw = data?.[0]?.data?.data?.data || {};
+  const vehicleData = data?.[1]?.data?.data?.data || [];
+
+  const tilesData = Object.entries(tilesRaw).map(([name, value]) => ({
+    name,
+    value,
+  }));
 
 
   if (loading) {
@@ -32,19 +34,14 @@ const Dashboard = () => {
       <MainContainer>
 
         <TilesContainer container spacing={4} columns={12}>
-          {tilesData.map((tile, idx) => {
-            const formattedName = tile.name
-              .replace(/_/g, ' ')
-              .replace(/\b\w/g, (char) => char.toUpperCase());
-            return (
-              <Grid key={`${tile.name}-${idx}`} size={{ xs: 12, sm: 6, md: 3 }}>
-                <Tiles>
-                  <Tiles.Header>{formattedName}</Tiles.Header>
-                  <Tiles.Content>{tile.value}</Tiles.Content>
-                </Tiles>
-              </Grid>
-            );
-          })}
+          {tilesData.map((tile, idx) => (
+            <Grid key={`${tile.name}-${idx}`} item xs={12} sm={6} md={3}>
+              <Tiles>
+                <Tiles.Header>{tile.name}</Tiles.Header>
+                <Tiles.Content>{String(tile.value)}</Tiles.Content>
+              </Tiles>
+            </Grid>
+          ))}
         </TilesContainer>
 
 

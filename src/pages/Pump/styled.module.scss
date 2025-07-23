@@ -1,5 +1,9 @@
 .pumpContainer {
   padding: 20px;
+  span{
+    color: red;
+    font-size: 18px;
+  }
 }
 
 .header {
@@ -107,6 +111,7 @@
 .editBtn { background-color: orange; color: white; }
 .statusBtn { background-color: #17a2b8; color: white; }
 .deleteBtn { background-color: red; color: white; }
+
 
 .editBtn:hover,
 .statusBtn:hover,
