@@ -1,7 +1,16 @@
 import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
+import {
+  tableHeaderStyle,
+  tableCellStyle
+
+} from '@pages/Dashboard/StyledComponent.jsx';
+
 import styles from './styled.module.scss';
+import { TextInput } from '@components/Input/index.jsx';
+import { AddButtons } from '@components/common/Button/buttons.jsx';
+import CommonTable from '@components/Table/index.jsx';
 
 const initialPumpStates = {
   name: '',
@@ -18,12 +27,14 @@ const Pump = () => {
   const handleAddPump = (data) => {
     setPumpData([...pumpData, { ...data, id: pumpData.length + 1 }]);
     setShowForm(false);
-
+    reset(initialPumpStates);
   };
 
   const {
     control,
     handleSubmit,
+    reset,
+
     formState: { errors, isSubmitting, isValid },
   } = useForm({
     defaultValues: initialPumpStates,
@@ -35,12 +46,14 @@ const Pump = () => {
     <div className={styles.pumpContainer}>
       <div className={styles.header}>
         <h1>Pump Details</h1>
-        <button
+
+        <AddButtons
           className={styles.addBtn}
           onClick={() => setShowForm(!showForm)}
         >
+          {' '}
           {showForm ? 'Cancel' : 'Add New Pump'}
-        </button>
+        </AddButtons>
       </div>
 
       {showForm && (
@@ -57,7 +70,9 @@ const Pump = () => {
                 control={control}
                 rules={{ required: 'Enter name' }}
                 render={({ field: { onChange, value } }) => (
-                  <input type="text" value={value} onChange={onChange} />
+                  <>
+                    <TextInput type="text" value={value} onChange={onChange} />
+                  </>
                 )}
               />
               {errors.name && <span>{errors.name.message}</span>}
@@ -69,7 +84,7 @@ const Pump = () => {
                 control={control}
                 rules={{ required: 'Enter type' }}
                 render={({ field: { onChange, value } }) => (
-                  <input type="text" value={value} onChange={onChange} />
+                  <TextInput type="text" value={value} onChange={onChange} />
                 )}
               />
               {errors.type && <span>{errors.type.message}</span>}
@@ -89,7 +104,6 @@ const Pump = () => {
                 )}
               />
               {errors.status && <span>{errors.status.message}</span>}
-
             </div>
             <div className={styles.formRow}>
               <label>Location</label>
@@ -98,60 +112,49 @@ const Pump = () => {
                 control={control}
                 rules={{ required: 'Enter location' }}
                 render={({ field: { onChange, value } }) => (
-                  <input type="text" value={value} onChange={onChange} />
+                  <TextInput type="text" value={value} onChange={onChange} />
                 )}
               />
               {errors.location && <span>{errors.location.message}</span>}
-
             </div>
             <div className={styles.formActions}>
-              <button
-                type="submit"
-                className={styles.saveBtn}
-                disabled={!isValid || isSubmitting}
-              >
+              <AddButtons type="submit" disabled={!isValid || isSubmitting}>
                 Save
-              </button>
-              <button
-                type="button"
-                className={styles.cancelBtn}
-                onClick={() => setShowForm(false)}
+              </AddButtons>
+
+              <AddButtons
+                onClick={() => {
+                  setShowForm(false);
+                  reset(initialPumpStates);
+                }}
+                variant="danger"
               >
                 Cancel
-              </button>
+              </AddButtons>
             </div>
           </form>
         </div>
       )}
-
-      <table className={styles.pumpTable}>
-        <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Status</th>
-          <th>Location</th>
-          <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {pumpData.map((pump) => (
+      <CommonTable
+        columns={['ID', 'Name', 'Type', 'Status', 'Location', 'Actions']}
+        data={pumpData}
+        renderRow={(pump, index) => (
           <tr key={pump.id}>
-            <td>{pump.id}</td>
-            <td>{pump.name}</td>
-            <td>{pump.type}</td>
-            <td>{pump.status}</td>
-            <td>{pump.location}</td>
-            <td>
+            <td style={tableCellStyle}>{pump.id}</td>
+            <td style={tableCellStyle}>{pump.name}</td>
+            <td style={tableCellStyle}>{pump.type}</td>
+            <td style={tableCellStyle}>{pump.status}</td>
+            <td style={tableCellStyle}>{pump.location}</td>
+            <td style={tableCellStyle}>
               <button className={styles.editBtn}>Edit</button>
               <button className={styles.statusBtn}>Status</button>
               <button className={styles.deleteBtn}>Delete</button>
             </td>
           </tr>
-        ))}
-        </tbody>
-      </table>
+        )}
+        headerStyle={tableHeaderStyle}
+        cellStyle={tableCellStyle}
+      />
     </div>
   );
 };

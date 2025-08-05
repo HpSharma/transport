@@ -6,7 +6,7 @@ class BaseApiRequest {
   static handleSuccess(response) {
     return {
       status: response.status,
-      data: response,
+      data: response.data,
       success: true,
     };
   }
